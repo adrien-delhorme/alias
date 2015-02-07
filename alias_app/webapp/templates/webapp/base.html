@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+  {% block header %}
+    {% include "webapp/partials/header.html" %}
+  {% endblock header %}
+    
+  {% block main %}
+  {% endblock main %}
+{% endblock body %}
+
+{% block js %}
+  <script type="text/javascript" src="{% static "js/app.min.js" %}"></script>
+{% endblock js %}

@@ -1,0 +1,36 @@
+<div class="panel-item-name {% if form.name.errors %}field-error{% endif %}">
+  {% if is_empty %}
+    <div class="item-state state-disabled"></div>
+  {% else %}
+    <div class="item-state {{ form.is_enabled.value|yesno:"state-enabled,state-disabled" }}"></div>
+  {% endif %}
+  {{ form.name }}
+  {{ form.name.errors }}
+</div>
+<div class="panel-item-domain form-group">
+  @{{ form.domain_id }}
+</div>
+{% if not is_empty %}
+  <div class="panel-item-enable-delete form-group">
+    <div class="panel-item-enable">
+      {{ form.is_enabled }}
+      {{ form.is_enabled.label_tag }}
+    </div>
+    <button type="submit" class="panel-item-delete" name="{{ form.prefix }}-DELETE" value="on">Delete</button>
+  </div>
+{% endif %}
+<div class="panel-item-whitelist form-group {% if form.whitelist.errors %}field-error{% endif %}">
+  {{ form.whitelist.label_tag }}
+  {{ form.whitelist }}
+  {{ form.whitelist.errors }}
+</div>
+<div class="panel-item-redirect form-group {% if form.redirect_to.errors %}field-error{% endif %}">
+  {{ form.redirect_to.label_tag }}
+  {{ form.redirect_to }}
+  {{ form.redirect_to.errors }}
+</div>
+<button type="submit" class="submit" name="{{ form.prefix }}-save">Save</button>
+<button type="submit" class="send-test-button" name="{{ form.prefix }}-send_test" value="on">Send a test email</button>
+{% for field in form.hidden_fields %}
+  {{ field }}
+{% endfor %}

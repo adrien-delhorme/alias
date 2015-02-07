@@ -1,0 +1,14 @@
+*.DS_Store
+*.sublime-project
+*.sublime-workspace
+*/settings/local.py
+*/settings/prod.py
+secrets.json
+*.pyc
+tasks.todo
+ui/
+*.sqlite3
+node_modules/
+alias_app/static/lib/
+public/
+npm-debug.log

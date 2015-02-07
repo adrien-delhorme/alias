@@ -1,0 +1,10 @@
+{% extends "webapp/partials/header-base.html" %}
+
+{% block navbar-links %}
+    <div id="navbar_menu" class="collapse navbar-collapse" aria-expanded="false">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'setup' %}">Setup</a></li>
+        <li><a href="{% url 'logout' %}">Log out</a></li>
+      </ul>
+    </div>
+{% endblock navbar-links %}

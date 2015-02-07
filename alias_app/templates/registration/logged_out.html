@@ -1,0 +1,10 @@
+{% extends "webapp/base.html" %}
+{% load i18n %}
+
+{% block main %}
+  <div class="container-fluid">
+    <h1>Logged out</h1>
+    <p>{% trans "Bye bye!" %}</p>
+    <p><a href="{% url 'home' %}" class="btn btn-project btn-block">{% trans 'Log in again' %}</a></p>
+  </div>
+{% endblock main %}

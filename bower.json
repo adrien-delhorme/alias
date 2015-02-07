@@ -1,0 +1,20 @@
+{
+  "name": "alias",
+  "version": "0.1.0",
+  "authors": [
+    "Adrien Delhorme <adrien.delhorme@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "alias_app/static/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2"
+  }
+}

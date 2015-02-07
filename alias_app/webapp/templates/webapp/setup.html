@@ -1,0 +1,12 @@
+{% extends "webapp/base.html" %}
+
+{% block main %}
+  <div class="container-fluid">
+    <h1>Setup</h1>
+    <form action="." method="post">
+      {% csrf_token %}
+      {% include "webapp/partials/form.html" %}
+      <button type="submit" class="btn btn-project btn-block">Save</button>
+    </form>
+  </div>
+{% endblock main %}

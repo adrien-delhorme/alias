@@ -1,0 +1,64 @@
+@import "variables.less";
+
+//
+// Navbar
+// --------------------------------------------------
+
+body {
+    padding-top: 50/14em;
+}
+
+.navbar-project {
+    color: @project-white;
+    background-color: @project-green;
+
+    h1 {
+        margin-top: 0;
+    }
+
+    a {
+        color: @project-white;
+    }
+
+    li {
+        a {
+            &:hover,
+            &:focus {
+                background-color: @project-green-light;
+            }
+        }
+    }
+
+    .navbar-toggle {
+        border-color: transparent;
+        &:hover,
+        &:focus {
+            
+        }
+        &:active {
+            .icon-bar {
+                background-color: @project-green-light;
+            }
+        }
+        .icon-bar {
+            background-color: @project-white;
+
+        }
+    }
+}
+
+//
+// Button
+// --------------------------------------------------
+
+.btn-project {
+    color: @project-white;
+    background-color: @project-green;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+        color: @project-white;
+        background-color: @project-green-light;
+        transition: background-color 0.25s ease;
+    }
+}

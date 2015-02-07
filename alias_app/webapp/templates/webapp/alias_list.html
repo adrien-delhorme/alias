@@ -1,0 +1,61 @@
+{% extends "webapp/base.html" %}
+{% load i18n %}
+{% load display %}
+{% load staticfiles %}
+
+{% block body-id %}id_alias_list{% endblock body-id %}
+
+{% block main %}
+  <div class="container-fluid">
+    <div class="list-header">
+      <div class="list-header-left">
+        <h2>{{ alias_forms|length }} alias</h2>
+      </div>
+      <div class="list-header-right">
+        <a href="#" id="id_new_alias_btn" class="btn btn-link">+ New alias</a>
+      </div>
+      <div class="panel">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    </div>
+  </div>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+  <fieldset class="formlist">
+    <ul class="list-content">
+      {% for form in alias_forms %}
+        <li class="item {{ form.errors|yesno:"active," }}">
+          <a href="#">
+            <div class="item-state {{ form.is_enabled.value|yesno:"state-enabled,state-disabled" }}"></div>
+            <span class="item-name">{{ form.name.value|default:"new alias" }}</span><span class="item-domain">@{{ form.domain_id|display }}</span>
+          </a>
+          <div class="panel">
+            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <form action="." method="post">
+              {% csrf_token %}
+              {% include "webapp/partials/alias_form.html" %}
+            </form>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </fieldset>
+  
+  <div class="empty-form">
+    <li class="item active">
+      <div class="panel">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {% with empty_form as form %}
+          {% include "webapp/partials/alias_form.html" with is_empty=True %}
+        {% endwith %}
+      </div>
+    </li>
+  </div>
+{% endblock main %}
