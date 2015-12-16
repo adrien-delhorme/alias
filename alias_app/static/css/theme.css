@@ -3619,6 +3619,9 @@ body {
   -webkit-transition: background-color 0.25s ease;
           transition: background-color 0.25s ease;
 }
+a:hover {
+  text-decoration: none;
+}
 #id_alias_list .list-header {
   position: relative;
   margin-left: -15px;
@@ -3668,7 +3671,7 @@ body {
 #id_alias_list .list-content .item {
   position: relative;
 }
-#id_alias_list .list-content .item.active a {
+#id_alias_list .list-content .item.active .item-link {
   position: absolute;
   left: 0;
   right: 0;
@@ -3690,7 +3693,7 @@ body {
   -webkit-transition: -webkit-transform 0.25s cubic-bezier(0, 1.5, 0.5, 1) 0.25s;
           transition: transform 0.25s cubic-bezier(0, 1.5, 0.5, 1) 0.25s;
 }
-#id_alias_list .list-content .item a {
+#id_alias_list .list-content .item .item-link {
   display: block;
   padding-right: 15px;
   padding-left: 15px;
@@ -3701,13 +3704,13 @@ body {
   -webkit-transition: background-color 0.5s ease;
           transition: background-color 0.5s ease;
 }
-#id_alias_list .list-content .item a:hover {
+#id_alias_list .list-content .item .item-link:hover {
   background-color: #d0d0d0;
   -webkit-transition: background-color 0.5s ease;
           transition: background-color 0.5s ease;
 }
-#id_alias_list .list-content .item a:active,
-#id_alias_list .list-content .item a:focus {
+#id_alias_list .list-content .item .item-link:active,
+#id_alias_list .list-content .item .item-link:focus {
   background-color: #13b680;
 }
 #id_alias_list .list-content .item.new-row {

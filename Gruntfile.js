@@ -34,28 +34,25 @@ module.exports = function(grunt) {
       development: {
         options: {
           separator: '\n\n',
+          nonull: true
         },
-        dist: {
-          src: [
-            "alias_app/static/lib/jquery/dist/jquery.js",
-            "alias_app/static/lib/bootstrap/js/collapse.js",
-            "alias_app/static/js/app/**/*.js"
-          ],
-          dest: 'alias_app/static/js/app.min.js'
-        }
+        src: [
+          "alias_app/static/lib/jquery/dist/jquery.js",
+          "alias_app/static/lib/bootstrap/js/collapse.js",
+          "alias_app/static/js/app/**/*.js"
+        ],
+        dest: 'alias_app/static/js/app.min.js'
       },
       production: {
         options: {
-          separator: '\n\n',
+          separator: '\n\n'
         },
-        dist: {
-          src: [
-            "alias_app/static/lib/jquery/dist/jquery.js",
-            "alias_app/static/lib/bootstrap/js/collapse.js",
-            "alias_app/static/js/app/**/*.js"
-          ],
-          dest: 'alias_app/static/js/app.js'
-        }
+        src: [
+          "alias_app/static/lib/jquery/dist/jquery.js",
+          "alias_app/static/lib/bootstrap/js/collapse.js",
+          "alias_app/static/js/app/**/*.js"
+        ],
+        dest: 'alias_app/static/js/app.js'
       }
     },
     uglify: {

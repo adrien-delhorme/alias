@@ -14,48 +14,60 @@
       <div class="list-header-right">
         <a href="#" id="id_new_alias_btn" class="btn btn-link">+ New alias</a>
       </div>
-      <div class="panel">
-        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      </div>
     </div>
   </div>
 
   {% if messages %}
-    <ul class="messages">
+    <div class="messages">
       {% for message in messages %}
-        <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+        <div {% if message.tags %}class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
       {% endfor %}
-    </ul>
+    </div>
   {% endif %}
   
-  <fieldset class="formlist">
-    <ul class="list-content">
-      {% for form in alias_forms %}
-        <li class="item {{ form.errors|yesno:"active," }}">
-          <a href="#">
-            <div class="item-state {{ form.is_enabled.value|yesno:"state-enabled,state-disabled" }}"></div>
-            <span class="item-name">{{ form.name.value|default:"new alias" }}</span><span class="item-domain">@{{ form.domain_id|display }}</span>
+  <div class="container">
+    <div class="formlist row">
+      <ul class="list-content">
+        <li class="item empty-form">
+          <a href="#" class="item-link">
+            <div class="item-state state-disabled"></div>
+            <span class="item-name">new.alias</span><span class="item-domain">@my.domain</span>
           </a>
           <div class="panel">
             <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <form action="." method="post">
               {% csrf_token %}
-              {% include "webapp/partials/alias_form.html" %}
+              {% include "webapp/partials/alias_form.html" with form=empty_form is_empty=True %}
             </form>
           </div>
         </li>
-      {% endfor %}
-    </ul>
-  </fieldset>
+        {% for form in alias_forms %}
+          <li class="item {{ form.errors|yesno:"active," }}">
+            <a href="#" class="item-link">
+              <div class="item-state {{ form.is_enabled.value|yesno:"state-enabled,state-disabled" }}"></div>
+              <span class="item-name">{{ form.name.value|default:"new alias" }}</span><span class="item-domain">@{{ form.domain_id|display }}</span>
+            </a>
+            <div class="panel">
+              <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <form action="." method="post">
+                {% csrf_token %}
+                {% include "webapp/partials/alias_form.html" %}
+              </form>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
   
+  {% comment %}
   <div class="empty-form">
     <li class="item active">
       <div class="panel">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        {% with empty_form as form %}
-          {% include "webapp/partials/alias_form.html" with is_empty=True %}
-        {% endwith %}
+        {% include "webapp/partials/alias_form.html" with form=empty_form is_empty=True %}
       </div>
     </li>
   </div>
+  {% endcomment %}
 {% endblock main %}

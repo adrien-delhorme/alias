@@ -1,11 +1,11 @@
 var List = (function() {
   var initialize = function() {
-    $(".item a").on('click', function(e) {
+    $(".item .item-link").on("click", function(e) {
       var $item = $(this).parent();
       e.preventDefault();
 
       $(".formlist .item.active").removeClass("active");
-      $item.addClass('active');
+      $item.addClass("active");
       initializePanel($item);
     });
 
@@ -13,12 +13,20 @@ var List = (function() {
     if ($(".formlist .item.active").length > 0) {
       initializePanel($(".formlist .item.active"));
     }
+
+    $("#id_new_alias_btn").on("click", function(e) {
+      $(".empty-form").show().addClass("active");
+      initializePanel($(".empty-form"));
+      $(".empty-form").on("panel.closed", function(e) {
+        $(".empty-form").hide();
+      });
+    });
   }
 
   var initializePanel = function($item) {
     initializeCloseButton($item);
 
-    $("button[name$='-DELETE']").on('click', function(e) {
+    $(".panel-item-delete").on("click", function(e) {
       var answer = window.confirm("Would you really delete this alias?");
 
       if (answer === false) {
@@ -28,8 +36,9 @@ var List = (function() {
   }
 
   var initializeCloseButton = function($item) {
-    $item.find("button.close").on('click', function() {
-      $item.removeClass('active');
+    $item.find("button.close").on("click", function() {
+      $item.removeClass("active");
+      $item.trigger("panel.closed");
     });
   }
 

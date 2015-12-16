@@ -1,23 +1,22 @@
-from functools import partial, wraps
-
 from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.forms.formsets import formset_factory
+from django.http import HttpResponseNotFound
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.shortcuts import resolve_url
 from django.template.response import TemplateResponse
 from django.utils.http import is_safe_url
-from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 
 from .forms import SetupForm
 from .models import Settings
@@ -124,15 +123,19 @@ def alias_list_view(request):
             alias_forms = []
 
             for alias in alias_list:
-                if "{}-save".format(alias.resource_id) in request.POST:
-                    alias_form = handler.form_class(handler, request.POST, domains_choices=handler.domains.items, prefix=alias.resource_id)
-                    if alias_form.is_valid():
-                        alias_form.save(request)
-                        return HttpResponseRedirect(reverse('alias-list'))
+                alias_form = handler.form_class(handler, request.POST, domains_choices=handler.domains.items, prefix=alias.resource_id)
+                if alias_form.is_valid():
+                    alias_form.save(request)
+                    return HttpResponseRedirect(reverse('alias-list'))
                 else:
                     alias_form = handler.form_class(handler, initial=alias.to_native(), domains_choices=handler.domains.items, prefix=alias.resource_id)
 
                 alias_forms.append(alias_form)
+
+            empty_form = handler.form_class(handler, request.POST, domains_choices=handler.domains.items, prefix="form-__prefix__")
+            if empty_form.is_valid():
+                empty_form.save(request)
+                return HttpResponseRedirect(reverse('alias-list'))
 
         else:
             alias_forms = [handler.form_class(handler, initial=alias.to_native(), domains_choices=handler.domains.items, prefix=alias.resource_id) for alias in alias_list]
@@ -144,3 +147,27 @@ def alias_list_view(request):
         }
 
     return render(request, 'webapp/alias_list.html', data)
+
+
+@login_required
+def alias_delete_view(request, resource_id):
+    api_key = request.user.settings.api_key
+    hosting_service = request.user.settings.hosting_service
+
+    if hosting_service is None:
+        return HttpResponseRedirect(reverse('setup'))
+    else:
+        module = hosting_service.get_handler()
+        handler = module.Handler(credentials=(api_key, ''))
+
+    # Delete alias
+    try:
+        resource_id = int(resource_id)
+    except (ValueError, TypeError):
+        return HttpResponseNotFound()
+
+    alias = handler.alias.find('resource_id', resource_id)
+    handler.alias.remove('resource_id', resource_id)
+    messages.success(request, 'Alias {} has been removed.'.format(alias))
+
+    return HttpResponseRedirect(reverse('alias-list'))
