@@ -14,11 +14,21 @@ module.exports = function(grunt) {
       },
       production: {
         options: {
-          paths: ["alias_app/static/less",],
-          compress: true
+          paths: ["alias_app/static/less",]
         },
         files: {
-          "alias_app/static/css/theme.min.css": "alias_app/static/less/theme.less"
+          "alias_app/static/css/theme.css": "alias_app/static/less/theme.less"
+        }
+      }
+    },
+    cssmin: {
+      options: {
+        shorthandCompacting: false,
+        roundingPrecision: -1
+      },
+      target: {
+        files: {
+          "alias_app/static/css/theme.min.css": "alias_app/static/css/theme.css"
         }
       }
     },
@@ -88,10 +98,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
   grunt.registerTask('default', ['less:development', 'autoprefixer', 'concat:development', 'watch']);
-  grunt.registerTask('production', ['less:production', 'autoprefixer', 'concat:production', 'uglify']);
+  grunt.registerTask('production', ['less:production', 'autoprefixer', 'cssmin', 'concat:production', 'uglify']);
 };
