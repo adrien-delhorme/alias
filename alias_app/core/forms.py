@@ -40,7 +40,7 @@ class AliasForm(forms.Form):
         }
 
     def send_test_email(self, email):
-        subject = "Alias created"
+        subject = "Alias {} created".format(email)
         message = "Your new alias {} is working!".format(email)
         recipient_list = [email, ]
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list, fail_silently=True)

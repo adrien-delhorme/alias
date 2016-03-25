@@ -63,6 +63,9 @@ class AlwaysdataAliasForm(AliasForm):
                 self.create_rule(alias, whitelist)
                 alias.save()
 
+            # Automatically send an email when an alias is created
+            self.send_test_email(str(alias))
+
             messages.success(request, 'Alias {} has been created.'.format(alias))
 
     def create_rule(self, alias, whitelist):
