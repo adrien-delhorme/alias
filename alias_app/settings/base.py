@@ -120,4 +120,5 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStora
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
+LOGIN_URL = reverse_lazy('home')
 LOGIN_REDIRECT_URL = reverse_lazy('wizard')
