@@ -12,3 +12,5 @@ node_modules/
 alias_app/static/lib/
 public/
 npm-debug.log
+.venv/
+.env
